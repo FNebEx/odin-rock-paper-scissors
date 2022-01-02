@@ -1,5 +1,13 @@
+let button = document.querySelectorAll('.btn');
+let player = document.querySelector('.player-score');
+let computer = document.querySelector('.computer-score');
+let winner_results = document.querySelector('.results h1');
+
 let playerScore = 0;
 let computerScore = 0;
+
+player.textContent = playerScore;
+computer.textContent = computerScore;
 
 function computerPlay() {
   let choice = ['rock', 'paper', 'scissors'];
@@ -13,6 +21,7 @@ function playerRound(playerSelect, computerSelect) {
   let playerChoice = playerSelect.toLowerCase();
 
   
+
   if(playerChoice == computerSelect) {
     result = 'Tie';
   }
@@ -22,7 +31,7 @@ function playerRound(playerSelect, computerSelect) {
      (playerChoice == 'scissors' && computerSelect == 'paper')) {
     
     playerScore++;
-    result = 'Player Wins';
+    result = 'Player beats Computer';
   }
 
   if((computerSelect == 'rock' && playerChoice == 'scissors') ||
@@ -30,12 +39,26 @@ function playerRound(playerSelect, computerSelect) {
      (computerSelect == 'scissors' && playerChoice == 'paper')) {
 
     computerScore++;
-    result = 'Computer Wins';
+    result = 'Computer beats Player';
   }
+
+  winner_results.textContent = result;
+  player.textContent = playerScore;
+  computer.textContent = computerScore;
+
+  checkWinner(playerScore, computerScore);
  
   // console.log({playerChoice, computerSelect, result});
   return result;
 
+}
+
+function checkWinner(player, computer) {
+  if (player == 5)
+    alert("Player Wins");
+
+  if (computer == 5)
+    alert("Computer Wins");
 }
 
 function game() {
@@ -45,8 +68,8 @@ function game() {
   console.log(playerRound(playerSelect, computerSelect), playerScore, computerScore);
 }
 
-game();
-game();
-game();
-game();
-game();
+button.forEach(btn => {
+  btn.addEventListener('click', () => {
+    playerRound(btn.value, computerPlay())
+  });
+})
